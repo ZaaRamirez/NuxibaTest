@@ -1,0 +1,40 @@
+CREATE TABLE logDial 
+(idLlamada VARCHAR(10),
+fechaDeLlamada DATETIME,
+tiempoDialogo SMALLINT,
+telefono VARCHAR(10),
+tipoDeLlamada VARCHAR(15)
+);
+
+CREATE TABLE costos 
+(tipoDeLlamada VARCHAR(15),
+costo DECIMAL(10,4)
+);
+
+//Registros febrero
+
+SELECT * 
+    FROM  logDial
+    WHERE (Fechadellamada LIKE "%-02-%")AND (Tipollamada="Cel LD")
+
+//Porcentaje
+
+SELECT AVG(TiempodeDialogo) 
+    FROM  logDial
+    WHERE (Fechadellamada LIKE "%-02-%")AND (Tipollamada="Cel LD")
+
+//Total minutos y costo
+
+SELECT IDLlamada,(TiempodeDialogo/60) AS minutos,((TiempodeDialogo/60)*0.4) AS totalC
+    FROM  logDial
+    WHERE (Fechadellamada LIKE "%-01-%")AND (Tipollamada="Cel")
+UNION ALL
+
+SELECT IDLlamada,(TiempodeDialogo/60) AS minutos,((TiempodeDialogo/60)*0.12) AS totalC
+    FROM  logDial
+    WHERE (Fechadellamada LIKE "%-01-%")AND (Tipollamada="LD nacional")
+UNION ALL
+
+SELECT IDLlamada,(TiempodeDialogo/60) AS minutos,((TiempodeDialogo/60)*0.5) AS totalC
+    FROM  logDial
+    WHERE (Fechadellamada LIKE "%-01-%")AND (Tipollamada="Cel LD")
